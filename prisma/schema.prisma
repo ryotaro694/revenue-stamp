@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Stamp {
+  id                  Int                  @id @default(autoincrement())
+  unitPrice           Int
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  revenueStampDetails RevenueStampDetail[]
+}
+
+model RevenueStamp {
+  id                     Int                  @id @default(autoincrement())
+  totalConsumptionAmount Int
+  totalQuantity          Int
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+  revenueStampDetails    RevenueStampDetail[]
+}
+
+model RevenueStampDetail {
+  id                Int          @id @default(autoincrement())
+  consumptionAmount Int
+  stamp             Stamp        @relation(fields: [stampId], references: [id])
+  stampId           Int
+  revenueStamp      RevenueStamp @relation(fields: [revenueStampId], references: [id])
+  revenueStampId    Int
+  quantity          Int
+  memo              String?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+}
