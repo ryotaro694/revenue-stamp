@@ -1,4 +1,5 @@
 export type RevenueStamp = {
-  amount: number;
+  unitPrice: number;
   quantity: number;
+  memo?: string;
 };
