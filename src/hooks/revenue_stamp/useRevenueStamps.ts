@@ -47,14 +47,8 @@ export const useRevenueStamps = () => {
       }
 
       const result = await response.json();
-      toast.promise(promise, {
-        loading: 'Loading...',
-        success: () => {
-          return `保存しました！`;
-        },
-        error: 'Error',
-      });
-      console.log('Saved successfully:', result);
+      toast.success("保存しました！");
+
       setIsLoading(false); 
     } catch (error) {
       console.error('Error saving revenue stamps:', error);
